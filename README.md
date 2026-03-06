@@ -24,6 +24,18 @@ Key functionalities include:
 
 4.`AvroDeserializer`: A mini utility for deserializing Avro-formatted feed files with support for streaming large files, binary data, and JSON conversion.
 
+Additionally, there's a `Contributing.md` file that provides guidelines for contributing to the project, including bug reporting, submitting changes,
+and code style.
+
+There are individual methods as well:
+
+* CallGetFeedTypes : To get the list of feed types
+* CallGetFiles : To get the list of files for a given feed type
+* CallGetFile : To the file metadata
+* CallGetAccess : To get the access configuration
+* CallDownloadFile : To download the feed file
+
+For more details on Feed V1 API, please refer to the [documentation](https://developer.ebay.com/api-docs/buy/feed/v1/static/overview.html).
 
 # Setup
 
