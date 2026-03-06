@@ -24,6 +24,9 @@ Key functionalities include:
 
 4.`AvroDeserializer`: A mini utility for deserializing Avro-formatted feed files with support for streaming large files, binary data, and JSON conversion.
 
+The project also includes a configuration file `ebay-config-sample.yaml` which contains OAuth access tokens and other necessary credentials for
+interacting with eBay's API.
+
 Additionally, there's a `Contributing.md` file that provides guidelines for contributing to the project, including bug reporting, submitting changes,
 and code style.
 
