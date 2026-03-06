@@ -22,68 +22,8 @@ Key functionalities include:
 3. `findItem`: This method searches for a specific item in the unzipped feed file. It takes the item ID, unzipped output filename, and filtered output
    filename as parameters.
 
-4. **NEW:** `AvroDeserializer`: A mini utility for deserializing Avro-formatted feed files with support for streaming large files, binary data, and JSON conversion.
+4.`AvroDeserializer`: A mini utility for deserializing Avro-formatted feed files with support for streaming large files, binary data, and JSON conversion.
 
-The project also includes a configuration file `ebay-config-sample.yaml` which contains OAuth access tokens and other necessary credentials for
-interacting with eBay's API.
-
-Additionally, there's a `Contributing.md` file that provides guidelines for contributing to the project, including bug reporting, submitting changes,
-and code style.
-
-There are individual methods as well:
-
-* CallGetFeedTypes : To get the list of feed types
-* CallGetFiles : To get the list of files for a given feed type
-* CallGetFile : To the file metadata
-* CallGetAccess : To get the access configuration
-* CallDownloadFile : To download the feed file
-
-For more details on Feed V1 API, please refer to the [documentation](https://developer.ebay.com/api-docs/buy/feed/v1/static/overview.html).
-
-# Avro Deserialization
-
-The SDK now includes a powerful **AvroDeserializer** utility for working with Avro-formatted feed files. This mini utility provides:
-
-- ✅ **Stream large feed files** without loading everything into memory (Recommended)
-- ✅ Deserialize Avro container files
-- ✅ Deserialize binary Avro data with schema
-- ✅ Convert Avro records to JSON
-- ✅ Extract schema information from Avro files
-
-### Recommended: Stream Processing for Feed Files
-
-**Feed files can be multiple GBs in size.** Use the streaming API to process them efficiently:
-
-```java
-import com.ebay.feed.util.AvroDeserializer;
-
-AvroDeserializer deserializer = new AvroDeserializer();
-
-// Process large feed files without loading all into memory
-deserializer.processAvroFile("feed-data.avro", record -> {
-    String itemId = record.get("itemId").toString();
-    Double price = (Double) record.get("price");
-    // Your processing logic here
-    System.out.println("Item: " + itemId + ", Price: $" + price);
-});
-```
-
-### For Small Files Only
-
-If you have a small Avro file (<100MB), you can load all records:
-
-```java
-import org.apache.avro.generic.GenericRecord;
-import java.util.List;
-
-// Only for small files - loads everything into memory
-List<GenericRecord> records = deserializer.deserializeAvroFile("small-file.avro");
-for (GenericRecord record : records) {
-    System.out.println(record.get("itemId"));
-}
-```
-
-📖 **For complete documentation and examples**, see [AVRO_DESERIALIZATION.md](AVRO_DESERIALIZATION.md)
 
 # Setup
 
