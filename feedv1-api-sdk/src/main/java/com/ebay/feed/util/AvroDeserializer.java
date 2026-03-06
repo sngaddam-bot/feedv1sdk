@@ -63,9 +63,24 @@ public class AvroDeserializer {
      * @param avroFilePath the path to the Avro container file
      * @return list of GenericRecord objects
      * @throws IOException if an I/O error occurs
+     * @throws IllegalArgumentException if the file path is null, empty, or not a valid file
      */
     public List<GenericRecord> deserializeAvroFile(String avroFilePath) throws IOException {
+        if (avroFilePath == null || avroFilePath.isBlank()) {
+            throw new IllegalArgumentException("Avro file path cannot be null or empty");
+        }
+        
         File avroFile = new File(avroFilePath);
+        if (!avroFile.exists()) {
+            throw new FileNotFoundException("Avro file not found: " + avroFilePath);
+        }
+        if (!avroFile.isFile()) {
+            throw new IllegalArgumentException("Path is not a file: " + avroFilePath);
+        }
+        if (!avroFile.canRead()) {
+            throw new IOException("Cannot read file: " + avroFilePath);
+        }
+        
         return deserializeAvroFile(avroFile);
     }
 
@@ -160,10 +175,28 @@ public class AvroDeserializer {
      * @param avroFilePath the path to the Avro container file
      * @param recordHandler the handler to process each record
      * @throws IOException if an I/O error occurs
+     * @throws IllegalArgumentException if the file path is null, empty, or not a valid file
      */
     public void processAvroFile(String avroFilePath, RecordHandler recordHandler) 
             throws IOException {
+        if (avroFilePath == null || avroFilePath.isBlank()) {
+            throw new IllegalArgumentException("Avro file path cannot be null or empty");
+        }
+        if (recordHandler == null) {
+            throw new IllegalArgumentException("Record handler cannot be null");
+        }
+        
         File avroFile = new File(avroFilePath);
+        if (!avroFile.exists()) {
+            throw new FileNotFoundException("Avro file not found: " + avroFilePath);
+        }
+        if (!avroFile.isFile()) {
+            throw new IllegalArgumentException("Path is not a file: " + avroFilePath);
+        }
+        if (!avroFile.canRead()) {
+            throw new IOException("Cannot read file: " + avroFilePath);
+        }
+        
         processAvroFile(avroFile, recordHandler);
     }
 
@@ -221,9 +254,24 @@ public class AvroDeserializer {
      * @param avroFilePath the path to the Avro file
      * @return the Avro schema
      * @throws IOException if an I/O error occurs
+     * @throws IllegalArgumentException if the file path is null, empty, or not a valid file
      */
     public Schema readSchema(String avroFilePath) throws IOException {
+        if (avroFilePath == null || avroFilePath.isBlank()) {
+            throw new IllegalArgumentException("Avro file path cannot be null or empty");
+        }
+        
         File avroFile = new File(avroFilePath);
+        if (!avroFile.exists()) {
+            throw new FileNotFoundException("Avro file not found: " + avroFilePath);
+        }
+        if (!avroFile.isFile()) {
+            throw new IllegalArgumentException("Path is not a file: " + avroFilePath);
+        }
+        if (!avroFile.canRead()) {
+            throw new IOException("Cannot read file: " + avroFilePath);
+        }
+        
         DatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
         try (DataFileReader<GenericRecord> dataFileReader = 
                 new DataFileReader<>(avroFile, datumReader)) {
